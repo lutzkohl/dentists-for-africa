@@ -173,39 +173,4 @@
                                                         </tr>
                                                         <tr>
                                                             <td style={{ paddingTop: '10px', fontSize: '13px' }}>
-                                                                <div style={{ marginBottom: '4px' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Newsletter anmelden</a></div>
-                                                                <div style={{ marginBottom: '15px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
-                                                                <div style={{ marginBottom: '15px' }}>{data.ctaText}</div>
-                                                                <div style={{ marginBottom: '20px' }}>
-                                                                    <a href={data.ctaLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '16px' }}>
-                                                                        Spenden
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4' }}>
-                                                                Spendenkonto: IBAN {data.iban}<br />
-                                                                BIC: {data.bic} {"\u00A0\u00A0\u00A0\u00A0\u00A0"} {data.bank}
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        ) : (
-                                            <textarea readOnly value={signatureRef.current?.innerHTML || ''} className="w-full h-96 p-4 bg-slate-900 text-red-200 font-mono text-xs rounded-xl border-none outline-none resize-none shadow-inner" />
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+                                                                <div style={{ marginBottom: '4px' }}
