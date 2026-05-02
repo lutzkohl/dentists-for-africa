@@ -23,7 +23,7 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // Einfache SVG Icons
+        // SVG Icons als kleine Komponenten
         const IconEye = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>;
         const IconCode = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
         const IconCopy = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>;
@@ -82,6 +82,7 @@
             };
 
             const handleCopy = () => {
+                if (!signatureRef.current) return;
                 const range = document.createRange();
                 range.selectNode(signatureRef.current);
                 window.getSelection().removeAllRanges();
@@ -131,18 +132,18 @@
                             </div>
 
                             <div className="lg:col-span-8">
-                                <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+                                <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left">
                                     <div className="flex justify-between items-center mb-6">
                                         <h2 className="text-lg font-bold text-slate-800 uppercase tracking-tight">Ergebnis</h2>
                                         <button onClick={handleCopy} className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 ${copied ? 'bg-green-600 text-white shadow-green-100' : 'bg-red-800 text-white hover:bg-red-900 shadow-red-100'}`}>
                                             {copied ? <IconCheck /> : <IconCopy />}
-                                            {copied ? 'In Zwischenablage!' : 'Signatur kopieren'}
+                                            {copied ? 'Kopiert!' : 'Signatur kopieren'}
                                         </button>
                                     </div>
 
                                     <div className="bg-white border border-slate-100 rounded-xl p-6 overflow-x-auto min-h-[400px] flex items-center justify-center">
                                         {viewMode === 'preview' ? (
-                                            <div className="signature-container" ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block', textAlign: 'left' }}>
+                                            <div className="signature-container" ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block' }}>
                                                 <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse' }}>
                                                     <tbody>
                                                         <tr>
@@ -173,4 +174,39 @@
                                                         </tr>
                                                         <tr>
                                                             <td style={{ paddingTop: '10px', fontSize: '13px' }}>
-                                                                <div style={{ marginBottom: '4px' }}
+                                                                <div style={{ marginBottom: '4px' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Newsletter anmelden</a></div>
+                                                                <div style={{ marginBottom: '15px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
+                                                                <div style={{ marginBottom: '15px' }}>{data.ctaText}</div>
+                                                                <div style={{ marginBottom: '20px' }}>
+                                                                    <a href={data.ctaLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '16px' }}>
+                                                                        Spenden
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4' }}>
+                                                                Spendenkonto: IBAN {data.iban}<br />
+                                                                BIC: {data.bic} {"\u00A0\u00A0\u00A0\u00A0\u00A0"} {data.bank}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        ) : (
+                                            <textarea readOnly value={signatureRef.current?.innerHTML || ''} className="w-full h-96 p-4 bg-slate-900 text-red-200 font-mono text-xs rounded-xl border-none outline-none resize-none shadow-inner" />
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
