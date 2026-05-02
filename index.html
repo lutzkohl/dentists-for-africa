@@ -56,17 +56,18 @@
                 officePhone: '+49 (0)3634 6048592',
                 officeEmail: 'info@dentists-for-africa.org',
                 
-                // Offizielle Links (Aktualisiert)
+                // Offizielle Links
                 webLink: 'https://dentists-for-africa.org/',
                 instaLink: 'https://www.instagram.com/dentistsforafrica/',
                 fbLink: 'https://www.facebook.com/dentists.africa',
                 ytLink: 'https://www.youtube.com/channel/UCqy-zN_jYO-hNj9dgaRHW7Q',
                 liLink: 'https://www.linkedin.com/company/dentists-for-africa',
                 
-                newsletterLink: 'https://www.dentists-for-africa.org/newsletter',
-                reportLink: 'https://www.dentists-for-africa.org/jahresbericht',
+                // Aktualisierte Kampagnen-Links
+                newsletterLink: 'https://dentists-for-africa.org/jahresbericht2024/',
+                reportLink: 'https://dentists-for-africa.org/jahresbericht2024/',
                 ctaText: 'Nehmen Sie an der diesjährigen Weihnachtstombola teil und schenken Sie Witwen und Waisen in Kenia dringend benötigte Hilfsgüter!',
-                ctaLink: 'https://www.dentists-for-africa.org/tombola',
+                ctaLink: 'https://dentists-for-africa.org/weihnachtstombola/',
                 
                 iban: 'DE86 8205 1000 0140 0467 98',
                 bic: 'HELADEF1WEM',
@@ -107,7 +108,6 @@
                         </header>
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                            {/* Editor Panel */}
                             <div className="lg:col-span-4 space-y-4">
                                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                     <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2">Mitarbeiter Daten</h2>
@@ -122,7 +122,6 @@
                                 </div>
                             </div>
 
-                            {/* Preview Panel */}
                             <div className="lg:col-span-8">
                                 <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
                                     <div className="flex justify-between items-center mb-6">
@@ -135,7 +134,6 @@
                                     <div className="bg-white border border-slate-100 rounded-xl p-6 overflow-x-auto min-h-[400px] flex items-center justify-center">
                                         {viewMode === 'preview' ? (
                                             <div ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block' }}>
-                                                {/* --- HTML SIGNATURE START --- */}
                                                 <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse' }}>
                                                     <tr>
                                                         <td style={{ paddingBottom: '15px' }}>
@@ -153,55 +151,3 @@
                                                             <img src={data.logoUrl} alt="Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px' }} />
                                                             <div style={{ fontSize: '13px', marginBottom: '8px' }}>{data.address}</div>
                                                             <div style={{ fontSize: '13px' }}>Phone: &nbsp; {data.officePhone}</div>
-                                                            <div style={{ fontSize: '13px', marginBottom: '15px' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
-                                                            <div>
-                                                                <a href={data.webLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.worldIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} /></a>
-                                                                <a href={data.instaLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.instaIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} /></a>
-                                                                <a href={data.fbLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.fbIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} /></a>
-                                                                <a href={data.ytLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.ytIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} /></a>
-                                                                <a href={data.liLink} style={{ textDecoration: 'none' }}><img src={data.liIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} /></a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={{ paddingTop: '10px', fontSize: '13px' }}>
-                                                            <div style={{ marginBottom: '4px' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Newsletter anmelden</a></div>
-                                                            <div style={{ marginBottom: '15px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
-                                                            <div style={{ marginBottom: '15px' }}>{data.ctaText}</div>
-                                                            <div style={{ marginBottom: '20px' }}>
-                                                                <a href={data.ctaLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '16px' }}>
-                                                                    Spenden
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4' }}>
-                                                            Spendenkonto: IBAN {data.iban}<br />
-                                                            BIC: {data.bic} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {data.bank}
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                {/* --- HTML SIGNATURE END --- */}
-                                            </div>
-                                        ) : (
-                                            <textarea readOnly value={signatureRef.current?.innerHTML || ''} className="w-full h-96 p-4 bg-slate-900 text-red-200 font-mono text-xs rounded-xl border-none outline-none resize-none shadow-inner" />
-                                        )}
-                                    </div>
-                                    <div className="mt-6 flex items-start gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100 text-[11px] text-blue-800 shadow-sm">
-                                        <div className="font-bold uppercase tracking-tighter bg-blue-200 px-1 rounded h-fit">Technik:</div>
-                                        <div>Icons & Logo werden von GitHub geladen. Die Links wurden auf den neuesten Stand gebracht.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
