@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dentists for Africa - Signatur Generator</title>
-    <!-- Tailwind CSS für das Design -->
+    <!-- Tailwind CSS für das UI Design -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM via CDN -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -14,7 +14,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .signature-container img { max-width: none !important; }
+        /* Verhindert, dass Tailwind die Bilder in der Signatur-Tabelle beeinflusst */
+        .signature-container img { max-width: none !important; border: 0 !important; }
     </style>
 </head>
 <body class="bg-slate-50">
@@ -23,7 +24,7 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // SVG Icons als kleine Komponenten
+        // SVG Icons Komponenten
         const IconEye = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>;
         const IconCode = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
         const IconCopy = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>;
@@ -48,9 +49,9 @@
             const [data, setData] = useState({
                 name: 'Vorname Nachname',
                 position: 'Position / Abteilung',
-                mobile: '0 123456789',
-                email: 'vorname.nachname@dentists-for-africa.org',
-                logoUrl: `${githubBase}/logo.jpg`, 
+                mobile: '+49 (0) 123 456789',
+                email: 'v.nachname@dentists-for-africa.org',
+                logoUrl: `${githubBase}/dfalogo.png`, 
                 worldIcon: `${githubBase}/world.png`,
                 instaIcon: `${githubBase}/insta.png`,
                 fbIcon: `${githubBase}/facebook.png`,
@@ -66,6 +67,7 @@
                 liLink: 'https://www.linkedin.com/company/dentists-for-africa',
                 newsletterLink: 'https://dentists-for-africa.org/jahresbericht2024/',
                 reportLink: 'https://dentists-for-africa.org/jahresbericht2024/',
+                meetingLink: 'https://dentists-for-africa.org/jahresversammlung/',
                 ctaText: 'Nehmen Sie an der diesjährigen Weihnachtstombola teil und schenken Sie Witwen und Waisen in Kenia dringend benötigte Hilfsgüter!',
                 ctaLink: 'https://dentists-for-africa.org/weihnachtstombola/',
                 iban: 'DE86 8205 1000 0140 0467 98',
@@ -112,9 +114,9 @@
                         </header>
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                            <div className="lg:col-span-4 space-y-4">
+                            <div className="lg:col-span-4 space-y-4 text-left">
                                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                                    <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2 text-left">Mitarbeiter Daten</h2>
+                                    <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2">Mitarbeiter Daten</h2>
                                     <InputField label="Name" name="name" value={data.name} onChange={handleInputChange} />
                                     <InputField label="Position" name="position" value={data.position} onChange={handleInputChange} />
                                     <InputField label="Mobil" name="mobile" value={data.mobile} onChange={handleInputChange} />
@@ -125,7 +127,7 @@
                                     <ol className="list-decimal ml-3 space-y-1 text-left">
                                         <li>Daten links eingeben.</li>
                                         <li>Rechts auf "Signatur kopieren" klicken.</li>
-                                        <li>In Apple Mail einfügen.</li>
+                                        <li>In Apple Mail einfügen (Einstellungen &gt; Signaturen).</li>
                                         <li><strong>Wichtig:</strong> Haken bei "Schriftart des Absenders beibehalten" entfernen.</li>
                                     </ol>
                                 </div>
@@ -144,25 +146,26 @@
                                     <div className="bg-white border border-slate-100 rounded-xl p-6 overflow-x-auto min-h-[400px] flex items-center justify-center">
                                         {viewMode === 'preview' ? (
                                             <div className="signature-container" ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block' }}>
-                                                <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse' }}>
+                                                {/* --- HTML E-MAIL SIGNATURE --- */}
+                                                <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse', fontSize: '12px' }}>
                                                     <tbody>
                                                         <tr>
-                                                            <td style={{ paddingBottom: '15px' }}>
-                                                                <div style={{ fontSize: '18px', fontWeight: 'bold', margin: '0' }}>{data.name}</div>
-                                                                <div style={{ fontSize: '14px', margin: '0' }}>{data.position}</div>
+                                                            <td style={{ paddingBottom: '15px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                                <div style={{ fontSize: '16px', fontWeight: 'bold', margin: '0' }}>{data.name}</div>
+                                                                <div style={{ fontSize: '12px', margin: '0' }}>{data.position}</div>
                                                                 <div style={{ padding: '8px 0' }}>{"\u00A0"}</div>
-                                                                <div style={{ fontSize: '14px' }}>{data.mobile}</div>
-                                                                <div style={{ fontSize: '14px' }}>
+                                                                <div style={{ fontSize: '12px' }}>{data.mobile}</div>
+                                                                <div style={{ fontSize: '12px' }}>
                                                                     <a href={`mailto:${data.email}`} style={{ color: brandColor, textDecoration: 'underline' }}>{data.email}</a>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ borderTop: '1px solid #333333', paddingTop: '20px', paddingBottom: '20px' }}>
-                                                                <img src={data.logoUrl} alt="Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px' }} />
-                                                                <div style={{ fontSize: '13px', marginBottom: '8px' }}>{data.address}</div>
-                                                                <div style={{ fontSize: '13px' }}>Phone: {"\u00A0"} {data.officePhone}</div>
-                                                                <div style={{ fontSize: '13px', marginBottom: '15px' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
+                                                            <td style={{ borderTop: '1px solid #333333', paddingTop: '20px', paddingBottom: '20px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                                <img src={data.logoUrl} alt="Dentists for Africa Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px', border: '0' }} />
+                                                                <div style={{ fontSize: '12px', marginBottom: '8px' }}>{data.address}</div>
+                                                                <div style={{ fontSize: '12px' }}>Phone: {"\u00A0"} {data.officePhone}</div>
+                                                                <div style={{ fontSize: '12px', marginBottom: '15px' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
                                                                 <div style={{ padding: '5px 0' }}>
                                                                     <a href={data.webLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.worldIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="Web" /></a>
                                                                     <a href={data.instaLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.instaIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="Insta" /></a>
@@ -173,19 +176,22 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ paddingTop: '10px', fontSize: '13px' }}>
+                                                            <td style={{ paddingTop: '10px', fontSize: '12px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                                                                 <div style={{ marginBottom: '4px' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Newsletter anmelden</a></div>
-                                                                <div style={{ marginBottom: '15px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
+                                                                <div style={{ marginBottom: '4px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
+                                                                <div style={{ marginBottom: '15px' }}>
+                                                                    Wir freuen uns auf das Jahrestreffen von Dentists for Africa: 13.–15. November 2026 in Jena – <a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>melden Sie sich jetzt hier an.</a>
+                                                                </div>
                                                                 <div style={{ marginBottom: '15px' }}>{data.ctaText}</div>
                                                                 <div style={{ marginBottom: '20px' }}>
-                                                                    <a href={data.ctaLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '16px' }}>
+                                                                    <a href={data.ctaLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                                                                         Spenden
                                                                     </a>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4' }}>
+                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                                                                 Spendenkonto: IBAN {data.iban}<br />
                                                                 BIC: {data.bic} {"\u00A0\u00A0\u00A0\u00A0\u00A0"} {data.bank}
                                                             </td>
