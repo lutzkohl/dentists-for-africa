@@ -24,7 +24,7 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // SVG Icons als Komponenten (vermeidet externe Abhängigkeiten, die auf GitHub Pages blockiert werden könnten)
+        // SVG Icons als Komponenten (vermeidet externe Abhängigkeiten)
         const IconEye = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>;
         const IconCode = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
         const IconCopy = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>;
@@ -149,11 +149,11 @@
                                     <div className="bg-white border border-slate-100 rounded-xl p-8 overflow-x-auto min-h-[400px] flex items-center justify-center">
                                         {viewMode === 'preview' ? (
                                             <div className="signature-container" ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block' }}>
-                                                {/* --- HTML SIGNATURE TABLE --- */}
-                                                <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse', fontSize: '12px' }}>
+                                                {/* --- HTML E-MAIL SIGNATURE TABLE --- */}
+                                                <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse', fontSize: '12px', border: 'none', msoTableLspace: '0pt', msoTableRspace: '0pt' }}>
                                                     <tbody>
                                                         <tr>
-                                                            <td style={{ paddingBottom: '15px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                            <td style={{ paddingBottom: '15px', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
                                                                 <div style={{ fontSize: '14px', fontWeight: 'bold', margin: '0' }}>{data.name}</div>
                                                                 <div style={{ fontSize: '12px', margin: '0' }}>{data.position}</div>
                                                                 <div style={{ padding: '8px 0' }}>{"\u00A0"}</div>
@@ -164,7 +164,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ borderTop: '1px solid #333333', paddingTop: '20px', paddingBottom: '20px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                            <td style={{ borderTop: '1px solid #333333', borderBottom: 'none', borderLeft: 'none', borderRight: 'none', paddingTop: '20px', paddingBottom: '20px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                                                                 <img src={data.logoUrl} alt="Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px', border: '0' }} />
                                                                 <div style={{ fontSize: '12px', marginBottom: '8px' }}>{data.address}</div>
                                                                 <div style={{ fontSize: '12px' }}>Phone: {"\u00A0"} {data.officePhone}</div>
@@ -179,7 +179,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ paddingTop: '10px', fontSize: '12px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                            <td style={{ paddingTop: '10px', fontSize: '12px', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
                                                                 <div style={{ marginBottom: '4px' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Newsletter anmelden</a></div>
                                                                 <div style={{ marginBottom: '4px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
                                                                 <div style={{ marginBottom: '15px' }}>
@@ -187,14 +187,14 @@
                                                                 </div>
                                                                 {/* --- SPENDEN BUTTON --- */}
                                                                 <div style={{ marginBottom: '20px' }}>
-                                                                    <a href={data.spendenLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                                    <a href={data.spendenLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
                                                                         Spenden
                                                                     </a>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
                                                                 Spendenkonto: IBAN {data.iban}<br />
                                                                 BIC: {data.bic} {"\u00A0\u00A0\u00A0\u00A0\u00A0"} {data.bank}
                                                             </td>
