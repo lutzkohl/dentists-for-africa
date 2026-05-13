@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dentists for Africa - Signatur Generator</title>
-    <!-- Tailwind CSS für das UI Design -->
+    <!-- Tailwind CSS für das UI Design des Generators -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM via CDN -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -14,7 +14,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        /* Verhindert, dass Tailwind die Bilder in der Signatur-Tabelle beeinflusst */
+        /* Sicherstellen, dass E-Mail-Clients keine Bilder skalieren */
         .signature-container img { max-width: none !important; border: 0 !important; }
     </style>
 </head>
@@ -24,7 +24,7 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // SVG Icons Komponenten
+        // SVG Icons als Komponenten (vermeidet externe Abhängigkeiten, die auf GitHub Pages blockiert werden könnten)
         const IconEye = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>;
         const IconCode = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
         const IconCopy = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>;
@@ -65,9 +65,10 @@
                 fbLink: 'https://www.facebook.com/dentists.africa',
                 ytLink: 'https://www.youtube.com/channel/UCqy-zN_jYO-hNj9dgaRHW7Q',
                 liLink: 'https://www.linkedin.com/company/dentists-for-africa',
-                newsletterLink: 'https://dentists-for-africa.org/jahresbericht2024/',
+                newsletterLink: 'https://dentists-for-africa.org/newsletter-anmeldung/',
                 reportLink: 'https://dentists-for-africa.org/jahresbericht2024/',
                 meetingLink: 'https://dentists-for-africa.org/jahresversammlung/',
+                spendenLink: 'https://dentists-for-africa.org/spenden/',
                 iban: 'DE86 8205 1000 0140 0467 98',
                 bic: 'HELADEF1WEM',
                 bank: 'Sparkasse Mittelthüringen'
@@ -87,9 +88,13 @@
                 range.selectNode(signatureRef.current);
                 window.getSelection().removeAllRanges();
                 window.getSelection().addRange(range);
-                document.execCommand('copy');
-                setCopied(true);
-                setTimeout(() => setCopied(false), 3000);
+                try {
+                    document.execCommand('copy');
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 3000);
+                } catch (err) {
+                    console.error("Kopieren fehlgeschlagen", err);
+                }
                 window.getSelection().removeAllRanges();
             };
 
@@ -99,7 +104,7 @@
                         <header className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                             <div className="text-left">
                                 <h1 className="text-2xl font-black text-red-900 uppercase tracking-tighter">Dentists for Africa</h1>
-                                <p className="text-slate-500 text-sm font-medium">Offizieller E-Mail Signatur Generator</p>
+                                <p className="text-slate-500 text-sm font-medium italic">Offizieller Signatur-Generator</p>
                             </div>
                             <div className="flex bg-slate-100 p-1 rounded-xl shadow-inner">
                                 <button onClick={() => setViewMode('preview')} className={`flex items-center px-6 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'preview' ? 'bg-white text-red-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
@@ -114,19 +119,19 @@
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                             <div className="lg:col-span-4 space-y-4 text-left">
                                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                                    <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2">Mitarbeiter Daten</h2>
+                                    <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2">Mitarbeiter-Daten</h2>
                                     <InputField label="Name" name="name" value={data.name} onChange={handleInputChange} />
                                     <InputField label="Position" name="position" value={data.position} onChange={handleInputChange} />
-                                    <InputField label="Mobil" name="mobile" value={data.mobile} onChange={handleInputChange} />
-                                    <InputField label="E-Mail" name="email" value={data.email} onChange={handleInputChange} type="email" />
+                                    <InputField label="Mobilnummer" name="mobile" value={data.mobile} onChange={handleInputChange} />
+                                    <InputField label="Persönliche E-Mail" name="email" value={data.email} onChange={handleInputChange} type="email" />
                                 </section>
-                                <div className="p-4 bg-red-50 rounded-2xl border border-red-100 text-[10px] text-red-800 leading-tight text-left">
-                                    <p className="font-bold mb-1 uppercase tracking-tighter text-red-900">Anleitung:</p>
-                                    <ol className="list-decimal ml-3 space-y-1 text-left">
+                                <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100 text-[10px] text-blue-800 leading-tight">
+                                    <p className="font-bold mb-1 uppercase tracking-tighter text-blue-900 underline">Hinweis für Apple Mail:</p>
+                                    <ol className="list-decimal ml-3 space-y-1">
                                         <li>Daten links eingeben.</li>
                                         <li>Rechts auf "Signatur kopieren" klicken.</li>
-                                        <li>In Apple Mail einfügen (Einstellungen &gt; Signaturen).</li>
-                                        <li><strong>Wichtig:</strong> Haken bei "Schriftart des Absenders beibehalten" entfernen.</li>
+                                        <li>In Mail-Einstellungen unter "Signaturen" einfügen.</li>
+                                        <li><strong>Wichtig:</strong> Haken bei "Schriftart des Absenders beibehalten" unbedingt entfernen!</li>
                                     </ol>
                                 </div>
                             </div>
@@ -134,22 +139,22 @@
                             <div className="lg:col-span-8">
                                 <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left">
                                     <div className="flex justify-between items-center mb-6">
-                                        <h2 className="text-lg font-bold text-slate-800 uppercase tracking-tight">Ergebnis</h2>
+                                        <h2 className="text-lg font-bold text-slate-800 uppercase tracking-tight">Ergebnis (Arial 9pt)</h2>
                                         <button onClick={handleCopy} className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 ${copied ? 'bg-green-600 text-white shadow-green-100' : 'bg-red-800 text-white hover:bg-red-900 shadow-red-100'}`}>
                                             {copied ? <IconCheck /> : <IconCopy />}
                                             {copied ? 'Kopiert!' : 'Signatur kopieren'}
                                         </button>
                                     </div>
 
-                                    <div className="bg-white border border-slate-100 rounded-xl p-6 overflow-x-auto min-h-[400px] flex items-center justify-center">
+                                    <div className="bg-white border border-slate-100 rounded-xl p-8 overflow-x-auto min-h-[400px] flex items-center justify-center">
                                         {viewMode === 'preview' ? (
                                             <div className="signature-container" ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block' }}>
-                                                {/* --- HTML E-MAIL SIGNATURE --- */}
+                                                {/* --- HTML SIGNATURE TABLE --- */}
                                                 <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse', fontSize: '12px' }}>
                                                     <tbody>
                                                         <tr>
                                                             <td style={{ paddingBottom: '15px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
-                                                                <div style={{ fontSize: '16px', fontWeight: 'bold', margin: '0' }}>{data.name}</div>
+                                                                <div style={{ fontSize: '14px', fontWeight: 'bold', margin: '0' }}>{data.name}</div>
                                                                 <div style={{ fontSize: '12px', margin: '0' }}>{data.position}</div>
                                                                 <div style={{ padding: '8px 0' }}>{"\u00A0"}</div>
                                                                 <div style={{ fontSize: '12px' }}>{data.mobile}</div>
@@ -160,7 +165,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td style={{ borderTop: '1px solid #333333', paddingTop: '20px', paddingBottom: '20px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
-                                                                <img src={data.logoUrl} alt="Dentists for Africa Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px', border: '0' }} />
+                                                                <img src={data.logoUrl} alt="Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px', border: '0' }} />
                                                                 <div style={{ fontSize: '12px', marginBottom: '8px' }}>{data.address}</div>
                                                                 <div style={{ fontSize: '12px' }}>Phone: {"\u00A0"} {data.officePhone}</div>
                                                                 <div style={{ fontSize: '12px', marginBottom: '15px' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
@@ -179,6 +184,12 @@
                                                                 <div style={{ marginBottom: '4px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
                                                                 <div style={{ marginBottom: '15px' }}>
                                                                     Wir freuen uns auf das Jahrestreffen von Dentists for Africa: 13.–15. November 2026 in Jena – <a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>melden Sie sich jetzt hier an.</a>
+                                                                </div>
+                                                                {/* --- SPENDEN BUTTON --- */}
+                                                                <div style={{ marginBottom: '20px' }}>
+                                                                    <a href={data.spendenLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                                                                        Spenden
+                                                                    </a>
                                                                 </div>
                                                             </td>
                                                         </tr>
