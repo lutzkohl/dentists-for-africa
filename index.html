@@ -147,13 +147,18 @@
                                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                     <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2">Mitarbeiter-Daten</h2>
                                     <InputField label="Name" name="name" value={data.name} onChange={handleInputChange} />
-                                    <InputField label="Position (Deutsch)" name="positionDe" value={data.positionDe} onChange={handleInputChange} />
-                                    <InputField label="Position (Englisch)" name="positionEn" value={data.positionEn} onChange={handleInputChange} />
+                                    
+                                    {/* Positionen nebeneinander */}
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <InputField label="Position (DE)" name="positionDe" value={data.positionDe} onChange={handleInputChange} />
+                                        <InputField label="Position (EN)" name="positionEn" value={data.positionEn} onChange={handleInputChange} />
+                                    </div>
+
                                     <InputField label="Mobilnummer" name="mobile" value={data.mobile} onChange={handleInputChange} />
                                     <InputField label="Persönliche E-Mail" name="email" value={data.email} onChange={handleInputChange} type="email" />
                                 </section>
                                 <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100 text-[10px] text-blue-800 leading-tight">
-                                    <p className="font-bold mb-1 uppercase tracking-tighter text-blue-900 underline">Hinweis für Apple Mail:</p>
+                                    <p className="font-bold mb-1 uppercase tracking-tighter text-blue-900 underline">Hinweis für Apple Mail & Outlook:</p>
                                     <ol className="list-decimal ml-3 space-y-1">
                                         <li>Daten links eingeben.</li>
                                         <li>Sprache (DE/EN) für die Signatur wählen.</li>
@@ -239,11 +244,19 @@
                                                                 <div style={{ marginBottom: '15px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>
                                                                     {currentText.meetingTextBefore}<a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.meetingLinkText}</a>
                                                                 </div>
-                                                                {/* --- SPENDEN BUTTON --- */}
+                                                                {/* --- SPENDEN BUTTON (BULLETPROOF FÜR OUTLOOK) --- */}
                                                                 <div style={{ marginBottom: '20px' }}>
-                                                                    <a href={data.spendenLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '11px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
-                                                                        {currentText.donate}
-                                                                    </a>
+                                                                    <table border="0" cellPadding="0" cellSpacing="0" style={{ borderCollapse: 'collapse', msoTableLspace: '0pt', msoTableRspace: '0pt', border: 'none' }}>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td align="center" bgColor={brandColor} style={{ backgroundColor: brandColor, borderRadius: '6px', padding: '10px 30px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
+                                                                                    <a href={data.spendenLink} target="_blank" style={{ color: '#ffffff', textDecoration: 'none', textDecorationLine: 'none', fontWeight: 'bold', fontSize: '11px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', display: 'block', border: 'none', lineHeight: '1.2' }}>
+                                                                                        {currentText.donate}
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </td>
                                                         </tr>
