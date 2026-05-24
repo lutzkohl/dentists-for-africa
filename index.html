@@ -46,9 +46,11 @@
             const githubBase = "https://raw.githubusercontent.com/lutzkohl/dentists-for-africa/main";
             const brandColor = '#8b2323';
 
+            const [lang, setLang] = useState('de'); // 'de' oder 'en'
             const [data, setData] = useState({
                 name: 'Vorname Nachname',
-                position: 'Position / Abteilung',
+                positionDe: 'Position / Abteilung',
+                positionEn: 'Position / Department',
                 mobile: '+49 (0) 123 456789',
                 email: 'v.nachname@dentists-for-africa.org',
                 logoUrl: `${githubBase}/dfalogo.png`, 
@@ -74,6 +76,28 @@
                 bank: 'Sparkasse Mittelthüringen'
             });
 
+            // Übersetzungs-Wörterbuch für feste Signaturinhalte
+            const translations = {
+                de: {
+                    newsletter: "Zum Newsletter anmelden",
+                    annualReport: "Zum Jahresbericht 2024",
+                    meetingTextBefore: "Wir freuen uns auf das Jahrestreffen von Dentists for Africa: 13.–15. November 2026 in Jena – ",
+                    meetingLinkText: "melden Sie sich jetzt hier an.",
+                    donate: "Spenden",
+                    bankLabel: "Spendenkonto",
+                    disclaimer: "[Sollte diese Mail nicht vollständig sein, bitte ich um Nachricht. Diese E-Mail einschließlich etwaiger Anlagen kann vertrauliche und/oder rechtlich geschützte Informationen enthalten. Diese Informationen sind ausschließlich für den Adressaten bestimmt. Wenn Sie nicht der richtige Adressat sind oder diese E-Mail irrtümlich erhalten haben, informieren Sie bitte unverzüglich den Absender und vernichten Sie diese E-Mail. Das unerlaubte Kopieren sowie die unbefugte Offenlegung und/oder Weitergabe dieser E-Mail oder ihres Inhalts sind nicht gestattet.]"
+                },
+                en: {
+                    newsletter: "Subscribe to our newsletter",
+                    annualReport: "To the Annual Report 2024",
+                    meetingTextBefore: "We look forward to the annual meeting of Dentists for Africa: November 13–15, 2026 in Jena – ",
+                    meetingLinkText: "register here now.",
+                    donate: "Donate",
+                    bankLabel: "Donation account",
+                    disclaimer: "[Should this email be incomplete, please notify the sender. This email, including any attachments, may contain confidential and/or legally protected information. This information is intended solely for the addressee. If you are not the intended recipient or have received this email in error, please notify the sender immediately and destroy this email. Unauthorized copying, disclosure, and/or distribution of this email or its contents is strictly prohibited.]"
+                }
+            };
+
             const [copied, setCopied] = useState(false);
             const [viewMode, setViewMode] = useState('preview');
             const signatureRef = useRef(null);
@@ -98,6 +122,8 @@
                 window.getSelection().removeAllRanges();
             };
 
+            const currentText = translations[lang];
+
             return (
                 <div className="min-h-screen py-8 px-4 text-center">
                     <div className="max-w-6xl mx-auto">
@@ -121,7 +147,8 @@
                                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                     <h2 className="text-xs font-bold mb-4 text-red-800 uppercase tracking-widest border-b pb-2">Mitarbeiter-Daten</h2>
                                     <InputField label="Name" name="name" value={data.name} onChange={handleInputChange} />
-                                    <InputField label="Position" name="position" value={data.position} onChange={handleInputChange} />
+                                    <InputField label="Position (Deutsch)" name="positionDe" value={data.positionDe} onChange={handleInputChange} />
+                                    <InputField label="Position (Englisch)" name="positionEn" value={data.positionEn} onChange={handleInputChange} />
                                     <InputField label="Mobilnummer" name="mobile" value={data.mobile} onChange={handleInputChange} />
                                     <InputField label="Persönliche E-Mail" name="email" value={data.email} onChange={handleInputChange} type="email" />
                                 </section>
@@ -129,6 +156,7 @@
                                     <p className="font-bold mb-1 uppercase tracking-tighter text-blue-900 underline">Hinweis für Apple Mail:</p>
                                     <ol className="list-decimal ml-3 space-y-1">
                                         <li>Daten links eingeben.</li>
+                                        <li>Sprache (DE/EN) für die Signatur wählen.</li>
                                         <li>Rechts auf "Signatur kopieren" klicken.</li>
                                         <li>In Mail-Einstellungen unter "Signaturen" einfügen.</li>
                                         <li><strong>Wichtig:</strong> Haken bei "Schriftart des Absenders beibehalten" unbedingt entfernen!</li>
@@ -138,8 +166,25 @@
 
                             <div className="lg:col-span-8">
                                 <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left">
-                                    <div className="flex justify-between items-center mb-6">
-                                        <h2 className="text-lg font-bold text-slate-800 uppercase tracking-tight">Ergebnis (Arial 9pt)</h2>
+                                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                                        <div className="flex items-center gap-2">
+                                            <h2 className="text-lg font-bold text-slate-800 uppercase tracking-tight mr-4">Ergebnis</h2>
+                                            {/* Sprachumschalter Tabs */}
+                                            <div className="flex bg-slate-100 p-1 rounded-xl shadow-inner border border-slate-200">
+                                                <button 
+                                                    onClick={() => setLang('de')} 
+                                                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'de' ? 'bg-red-800 text-white shadow-sm' : 'text-slate-600 hover:text-slate-800'}`}
+                                                >
+                                                    DE
+                                                </button>
+                                                <button 
+                                                    onClick={() => setLang('en')} 
+                                                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'en' ? 'bg-red-800 text-white shadow-sm' : 'text-slate-600 hover:text-slate-800'}`}
+                                                >
+                                                    EN
+                                                </button>
+                                            </div>
+                                        </div>
                                         <button onClick={handleCopy} className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 ${copied ? 'bg-green-600 text-white shadow-green-100' : 'bg-red-800 text-white hover:bg-red-900 shadow-red-100'}`}>
                                             {copied ? <IconCheck /> : <IconCopy />}
                                             {copied ? 'Kopiert!' : 'Signatur kopieren'}
@@ -152,10 +197,11 @@
                                                 {/* --- HTML E-MAIL SIGNATURE TABLE --- */}
                                                 <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse', fontSize: '12px', border: 'none', msoTableLspace: '0pt', msoTableRspace: '0pt' }}>
                                                     <tbody>
+                                                        {/* Top Section: Arial */}
                                                         <tr>
                                                             <td style={{ paddingBottom: '15px', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
                                                                 <div style={{ fontSize: '14px', fontWeight: 'bold', margin: '0' }}>{data.name}</div>
-                                                                <div style={{ fontSize: '12px', margin: '0' }}>{data.position}</div>
+                                                                <div style={{ fontSize: '12px', margin: '0' }}>{lang === 'de' ? data.positionDe : data.positionEn}</div>
                                                                 <div style={{ padding: '8px 0' }}>{"\u00A0"}</div>
                                                                 <div style={{ fontSize: '12px' }}>{data.mobile}</div>
                                                                 <div style={{ fontSize: '12px' }}>
@@ -163,40 +209,54 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        {/* Bottom Section: Calibri 9pt */}
                                                         <tr>
-                                                            <td style={{ borderTop: '1px solid #333333', borderBottom: 'none', borderLeft: 'none', borderRight: 'none', paddingTop: '20px', paddingBottom: '20px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
-                                                                <img src={data.logoUrl} alt="Logo" width="280" style={{ display: 'block', width: '280px', height: 'auto', marginBottom: '15px', border: '0' }} />
-                                                                <div style={{ fontSize: '12px', marginBottom: '8px' }}>{data.address}</div>
-                                                                <div style={{ fontSize: '12px' }}>Phone: {"\u00A0"} {data.officePhone}</div>
-                                                                <div style={{ fontSize: '12px', marginBottom: '15px' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
+                                                            <td style={{ borderBottom: 'none', borderLeft: 'none', borderRight: 'none', paddingTop: '0px', paddingBottom: '20px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', fontSize: '9pt' }}>
+                                                                {/* Trennlinie genau so lang wie das Logo (196px) */}
+                                                                <div style={{ borderTop: '1px solid #333333', width: '196px', height: '1px', marginTop: '0px', marginBottom: '20px' }}>{"\u00A0"}</div>
+                                                                
+                                                                {/* Logo auf 70% verkleinert (196px statt 280px) */}
+                                                                <img src={data.logoUrl} alt="Logo" width="196" style={{ display: 'block', width: '196px', height: 'auto', marginBottom: '15px', border: '0' }} />
+                                                                
+                                                                <div style={{ fontSize: '9pt', marginBottom: '8px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>{data.address}</div>
+                                                                <div style={{ fontSize: '9pt', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>Phone: {"\u00A0"} {data.officePhone}</div>
+                                                                <div style={{ fontSize: '9pt', marginBottom: '15px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
+                                                                
+                                                                {/* Social-Media-Buttons mit jeweils einer Leertaste dazwischen */}
                                                                 <div style={{ padding: '5px 0' }}>
-                                                                    <a href={data.webLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.worldIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="Web" /></a>
-                                                                    <a href={data.instaLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.instaIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="Insta" /></a>
-                                                                    <a href={data.fbLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.fbIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="FB" /></a>
-                                                                    <a href={data.ytLink} style={{ textDecoration: 'none', marginRight: '6px' }}><img src={data.ytIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="YT" /></a>
+                                                                    <a href={data.webLink} style={{ textDecoration: 'none' }}><img src={data.worldIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="Web" /></a>{" "}
+                                                                    <a href={data.instaLink} style={{ textDecoration: 'none' }}><img src={data.instaIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="Insta" /></a>{" "}
+                                                                    <a href={data.fbLink} style={{ textDecoration: 'none' }}><img src={data.fbIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="FB" /></a>{" "}
+                                                                    <a href={data.ytLink} style={{ textDecoration: 'none' }}><img src={data.ytIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="YT" /></a>{" "}
                                                                     <a href={data.liLink} style={{ textDecoration: 'none' }}><img src={data.liIcon} width="24" height="24" style={{ display: 'inline-block', border: '0' }} alt="LinkedIn" /></a>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ paddingTop: '10px', fontSize: '12px', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
-                                                                <div style={{ marginBottom: '4px' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Newsletter anmelden</a></div>
-                                                                <div style={{ marginBottom: '4px' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>Zum Jahresbericht 2024</a></div>
-                                                                <div style={{ marginBottom: '15px' }}>
-                                                                    Wir freuen uns auf das Jahrestreffen von Dentists for Africa: 13.–15. November 2026 in Jena – <a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>melden Sie sich jetzt hier an.</a>
+                                                            <td style={{ paddingTop: '10px', fontSize: '9pt', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
+                                                                <div style={{ marginBottom: '4px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.newsletter}</a></div>
+                                                                <div style={{ marginBottom: '4px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.annualReport}</a></div>
+                                                                <div style={{ marginBottom: '15px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>
+                                                                    {currentText.meetingTextBefore}<a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.meetingLinkText}</a>
                                                                 </div>
                                                                 {/* --- SPENDEN BUTTON --- */}
                                                                 <div style={{ marginBottom: '20px' }}>
-                                                                    <a href={data.spendenLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
-                                                                        Spenden
+                                                                    <a href={data.spendenLink} style={{ display: 'inline-block', padding: '10px 30px', backgroundColor: brandColor, color: '#ffffff', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold', fontSize: '11px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
+                                                                        {currentText.donate}
                                                                     </a>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ fontSize: '11px', color: '#333333', lineHeight: '1.4', fontFamily: 'Arial, Helvetica, sans-serif', border: 'none' }}>
-                                                                Spendenkonto: IBAN {data.iban}<br />
+                                                            <td style={{ fontSize: '9pt', color: '#333333', lineHeight: '1.4', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
+                                                                {currentText.bankLabel}: IBAN {data.iban}<br />
                                                                 BIC: {data.bic} {"\u00A0\u00A0\u00A0\u00A0\u00A0"} {data.bank}
+                                                            </td>
+                                                        </tr>
+                                                        {/* --- DISCLAIMER IN CALIBRI 7PT --- */}
+                                                        <tr>
+                                                            <td style={{ paddingTop: '20px', fontSize: '7pt', color: '#777777', lineHeight: '1.2', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none', textAlign: 'justify' }}>
+                                                                {currentText.disclaimer}
                                                             </td>
                                                         </tr>
                                                     </tbody>
