@@ -164,7 +164,7 @@
                                         <li>Sprache (DE/EN) für die Signatur wählen.</li>
                                         <li>Rechts auf "Signatur kopieren" klicken.</li>
                                         <li>In Mail-Einstellungen unter "Signaturen" einfügen.</li>
-                                        <li><strong>Wichtig:</strong> Haken bei "Schriftart des Absenders beibehalten" unbedingt entfernen!</li>
+                                        <li><strong>Nur für Apple Mail:</strong> Haken bei "Schriftart des Absenders beibehalten" unbedingt entfernen!</li>
                                     </ol>
                                 </div>
                             </div>
@@ -225,7 +225,10 @@
                                                                 
                                                                 <div style={{ fontSize: '9pt', marginBottom: '8px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>{data.address}</div>
                                                                 <div style={{ fontSize: '9pt', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>Phone: {"\u00A0"} {data.officePhone}</div>
-                                                                <div style={{ fontSize: '9pt', marginBottom: '15px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
+                                                                <div style={{ fontSize: '9pt', marginBottom: '0px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>E-Mail: <a href={`mailto:${data.officeEmail}`} style={{ color: brandColor, textDecoration: 'none' }}>{data.officeEmail}</a></div>
+                                                                
+                                                                {/* Leerzeile nach E-Mail-Adresse */}
+                                                                <div style={{ height: '14px', lineHeight: '14px', fontSize: '1px' }}>{"\u00A0"}</div>
                                                                 
                                                                 {/* Social-Media-Buttons mit jeweils einer Leertaste dazwischen */}
                                                                 <div style={{ padding: '5px 0' }}>
@@ -241,11 +244,15 @@
                                                             <td style={{ paddingTop: '10px', fontSize: '9pt', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
                                                                 <div style={{ marginBottom: '4px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.newsletter}</a></div>
                                                                 <div style={{ marginBottom: '4px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.annualReport}</a></div>
-                                                                <div style={{ marginBottom: '15px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>
+                                                                <div style={{ marginBottom: '0px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>
                                                                     {currentText.meetingTextBefore}<a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.meetingLinkText}</a>
                                                                 </div>
+                                                                
+                                                                {/* Leerzeile nach dem Anmeldelink des Jahrestreffens */}
+                                                                <div style={{ height: '14px', lineHeight: '14px', fontSize: '1px' }}>{"\u00A0"}</div>
+                                                                
                                                                 {/* --- SPENDEN BUTTON (BULLETPROOF FÜR OUTLOOK) --- */}
-                                                                <div style={{ marginBottom: '20px' }}>
+                                                                <div style={{ marginBottom: '0px' }}>
                                                                     <table border="0" cellPadding="0" cellSpacing="0" style={{ borderCollapse: 'collapse', msoTableLspace: '0pt', msoTableRspace: '0pt', border: 'none' }}>
                                                                         <tbody>
                                                                             <tr>
@@ -258,6 +265,9 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
+
+                                                                {/* Leerzeile nach Spendenbutton */}
+                                                                <div style={{ height: '14px', lineHeight: '14px', fontSize: '1px' }}>{"\u00A0"}</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
