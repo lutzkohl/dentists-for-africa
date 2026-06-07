@@ -68,7 +68,6 @@
                 ytLink: 'https://www.youtube.com/channel/UCqy-zN_jYO-hNj9dgaRHW7Q',
                 liLink: 'https://www.linkedin.com/company/dentists-for-africa',
                 newsletterLink: 'https://dentists-for-africa.org/newsletter-anmeldung/',
-                reportLink: 'https://dentists-for-africa.org/jahresbericht2024/',
                 meetingLink: 'https://dentists-for-africa.org/jahresversammlung/',
                 spendenLink: 'https://dentists-for-africa.org/spenden/',
                 iban: 'DE86 8205 1000 0140 0467 98',
@@ -80,7 +79,6 @@
             const translations = {
                 de: {
                     newsletter: "Zum Newsletter anmelden",
-                    annualReport: "Zum Jahresbericht 2024",
                     meetingTextBefore: "Wir freuen uns auf das Jahrestreffen von Dentists for Africa: 13.–15. November 2026 in Jena – ",
                     meetingLinkText: "melden Sie sich jetzt hier an.",
                     donate: "Spenden",
@@ -89,7 +87,6 @@
                 },
                 en: {
                     newsletter: "Subscribe to our newsletter",
-                    annualReport: "To the Annual Report 2024",
                     meetingTextBefore: "We look forward to the annual meeting of Dentists for Africa: November 13–15, 2026 in Jena – ",
                     meetingLinkText: "register here now.",
                     donate: "Donate",
@@ -200,7 +197,7 @@
                                         {viewMode === 'preview' ? (
                                             <div className="signature-container" ref={signatureRef} style={{ background: '#ffffff', display: 'inline-block' }}>
                                                 {/* --- HTML E-MAIL SIGNATURE TABLE --- */}
-                                                <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '500px', borderCollapse: 'collapse', fontSize: '12px', border: 'none', msoTableLspace: '0pt', msoTableRspace: '0pt' }}>
+                                                <table cellPadding="0" cellSpacing="0" border="0" style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: '#000000', lineHeight: '1.4', width: '600px', borderCollapse: 'collapse', fontSize: '12px', border: 'none', msoTableLspace: '0pt', msoTableRspace: '0pt' }}>
                                                     <tbody>
                                                         {/* Top Section: Arial */}
                                                         <tr>
@@ -243,7 +240,6 @@
                                                         <tr>
                                                             <td style={{ paddingTop: '10px', fontSize: '9pt', fontFamily: 'Calibri, Helvetica, Arial, sans-serif', border: 'none' }}>
                                                                 <div style={{ marginBottom: '4px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}><a href={data.newsletterLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.newsletter}</a></div>
-                                                                <div style={{ marginBottom: '4px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}><a href={data.reportLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.annualReport}</a></div>
                                                                 <div style={{ marginBottom: '0px', fontFamily: 'Calibri, Helvetica, Arial, sans-serif' }}>
                                                                     {currentText.meetingTextBefore}<a href={data.meetingLink} style={{ color: '#0056b3', textDecoration: 'underline' }}>{currentText.meetingLinkText}</a>
                                                                 </div>
